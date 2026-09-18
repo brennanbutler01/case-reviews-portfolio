@@ -1,6 +1,9 @@
+import { getVisitorToken, resetVisitorSession } from '@/auth/visitorSession'
+import { showNotification } from '@mantine/notifications'
 import { isPortfolioDemo } from '@/demo/mode'
 import { useAuth0 } from '@auth0/auth0-react'
 
+export const isVisitorDemo = import.meta.env.VITE_VISITOR_DEMO === 'true'
 export const isLocalDemo =
     import.meta.env.DEV &&
     import.meta.env.VITE_DEMO_MODE === 'true' &&
@@ -12,7 +15,7 @@ const demoUser =
 
 export function useAppAuth() {
     const auth = useAuth0()
-    if (!isLocalDemo && !isPortfolioDemo) return auth
+    if (!isLocalDemo && !isPortfolioDemo && !isVisitorDemo) return auth
     return {
         isAuthenticated: true,
         isLoading: false,
@@ -23,6 +26,7 @@ export function useAppAuth() {
             email: `${demoUser}@example.invalid`,
         },
         getAccessTokenSilently: async () => {
+            if (isVisitorDemo) return getVisitorToken()
             if (isPortfolioDemo) return 'portfolio-no-server-token'
             const response = await fetch(
                 `${import.meta.env.VITE_BACKEND_API}/dev/token/${demoUser}`,
@@ -45,7 +49,22 @@ export function useAppAuth() {
         loginWithRedirect: async () => {
             window.location.assign('/')
         },
-        logout: () => {
+        logout: async () => {
+            if (isVisitorDemo) {
+                try {
+                    await resetVisitorSession()
+                } catch (error) {
+                    showNotification({
+                        color: 'red',
+                        title: 'Reset failed',
+                        message:
+                            error instanceof Error
+                                ? error.message
+                                : 'Please retry.',
+                    })
+                }
+                return
+            }
             if (isPortfolioDemo) {
                 window.location.reload()
                 return

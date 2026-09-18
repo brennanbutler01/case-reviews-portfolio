@@ -72,3 +72,9 @@ Copy `.env.example` to `.env.local` and supply your own Auth0 application config
 The Docker demo login is available only in Vite development on loopback. Ordinary production builds require real authentication; the separate portfolio build uses only in-memory synthetic data. Hosted authentication and upgrades of an existing database need separate verification before deployment.
 
 See [RECOVERY.md](RECOVERY.md) for verification and remaining release work. Historical screenshots and exported review documents have been removed from the publication source; the public demo uses synthetic data.
+
+## Real API-backed visitor mode
+
+The `dev:visitor` command connects this original frontend to the companion API's production-mode visitor service on port 5210. Run the API's `compose.visitor.yaml` setup first. Then run `corepack yarn test:e2e:visitor`. This test creates and edits real database records, downloads a report, verifies isolation with a second browser context, reloads persisted data and resets the visitor session.
+
+For hosted builds set `VITE_VISITOR_DEMO=true`, `VITE_PORTFOLIO_DEMO=false`, and `VITE_BACKEND_API` to the real API URL. Visitor data expires after one hour; Reset demo deletes its server-side records. The current public Vercel site is still the old static demo until backend deployment and live integration checks are complete. See the API's VISITOR-DEMO.md for hosting requirements.

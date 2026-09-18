@@ -2,7 +2,7 @@ import { isPortfolioDemo } from '@/demo/mode'
 import { AppState, Auth0Provider } from '@auth0/auth0-react'
 import { useNavigate } from 'react-router-dom'
 import React from 'react'
-import { isLocalDemo } from '@/auth/useAppAuth'
+import { isLocalDemo, isVisitorDemo } from '@/auth/useAppAuth'
 import { MantineProvider } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
 import { Notifications } from '@mantine/notifications'
@@ -29,7 +29,7 @@ const Auth0ProviderWithNavigate = ({ children }: Props) => {
             <ModalsProvider>{children}</ModalsProvider>
         </MantineProvider>
     )
-    if (isLocalDemo || isPortfolioDemo) return content
+    if (isLocalDemo || isPortfolioDemo || isVisitorDemo) return content
     if (!(domain && clientId && redirectUri)) {
         return (
             <main>

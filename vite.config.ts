@@ -16,6 +16,7 @@ export default defineConfig({
             './tests-examples/*',
             './e2e-local/*',
             './e2e-portfolio/*',
+            './e2e-visitor/*',
         ],
     },
     resolve: {

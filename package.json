@@ -16,7 +16,9 @@
         "test:e2e:local": "playwright test --config playwright.local.config.ts",
         "build:portfolio": "tsc && VITE_PORTFOLIO_DEMO=true vite build",
         "test:e2e:portfolio": "playwright test --config playwright.portfolio.config.ts",
-        "deploy:portfolio": "corepack yarn build:portfolio && python3 scripts/deploy_portfolio.py"
+        "deploy:portfolio": "corepack yarn build:portfolio && python3 scripts/deploy_portfolio.py",
+        "dev:visitor": "VITE_VISITOR_DEMO=true VITE_BACKEND_API=http://127.0.0.1:5210 VITE_ROOT=http://127.0.0.1:5211 vite --host 127.0.0.1 --port 5211 --strictPort",
+        "test:e2e:visitor": "playwright test --config playwright.visitor.config.ts"
     },
     "dependencies": {
         "@auth0/auth0-react": "2.24.1",

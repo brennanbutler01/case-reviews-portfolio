@@ -3,7 +3,7 @@ import { useDisclosure } from '@mantine/hooks'
 import { Burger as MantineBurger, Menu } from '@mantine/core'
 import { HeaderProps } from '@/components/layout/header'
 import { Link, useLocation } from 'react-router-dom'
-import { useAppAuth } from '@/auth/useAppAuth'
+import { useAppAuth, isVisitorDemo } from '@/auth/useAppAuth'
 import { useEffect, useState } from 'react'
 
 const Burger = ({ links }: HeaderProps) => {
@@ -45,7 +45,7 @@ const Burger = ({ links }: HeaderProps) => {
                         await (isAuthenticated ? logout() : loginWithRedirect())
                     }
                 >
-                    {isPortfolioDemo
+                    {isPortfolioDemo || isVisitorDemo
                         ? 'Reset demo'
                         : isAuthenticated
                         ? 'Sign out'

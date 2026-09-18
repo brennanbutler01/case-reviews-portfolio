@@ -1,5 +1,5 @@
 import { isPortfolioDemo } from '@/demo/mode'
-import { useAppAuth } from '@/auth/useAppAuth'
+import { useAppAuth, isVisitorDemo } from '@/auth/useAppAuth'
 import { Button } from '@mantine/core'
 
 const AuthButton = () => {
@@ -19,7 +19,7 @@ const AuthButton = () => {
                     : loginWithRedirect()
             }
         >
-            {isPortfolioDemo
+            {isPortfolioDemo || isVisitorDemo
                 ? 'Reset demo'
                 : isLoading
                 ? 'Getting authentication'
