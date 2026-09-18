@@ -38,3 +38,7 @@ Added an explicit `build:portfolio` mode with independent in-memory sample data 
 The old hosted-test password has also been removed from the current source; those tests now require explicitly supplied environment variables. The September 17 cleanup rewrote affected branch histories; GitHub retained old commits still require Support follow-up. View details now includes general comments and creates fresh form state when opened, avoiding stale values after editing.
 
 Portfolio verification: all six production-build browser scenarios pass, alongside 104 unit/component tests, lint, build, the Docker browser workflow, and three API regression scenarios. The same six portfolio browser scenarios also pass against the public HTTPS site without an authenticated browser session.
+
+## September 18 hosted integration
+
+The public site now uses expiring visitor sessions, the original .NET API on Vercel container services, and a dedicated Neon free PostgreSQL database. The former static-only deployment described above is retained as an optional local build mode. All five hosted API ownership/session tests passed. Both desktop and mobile browser workflows passed against the hosted frontend, .NET API and Neon database, including reload persistence, PDF export, visitor isolation and reset. No historical provider credentials are reused.

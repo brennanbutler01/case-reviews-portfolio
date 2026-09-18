@@ -1,5 +1,5 @@
 {
-  "buildCommand": "corepack yarn build:portfolio",
+  "buildCommand": "corepack yarn build:visitor",
   "installCommand": "corepack yarn install --frozen-lockfile",
   "outputDirectory": "dist",
   "framework": "vite",

@@ -21,8 +21,14 @@ export function useAppAuth() {
         isLoading: false,
         error: undefined,
         user: {
-            sub: isPortfolioDemo ? 'portfolio-visitor' : `demo-${demoUser}`,
-            name: isPortfolioDemo ? 'Demo Reviewer' : `Demo ${demoUser}`,
+            sub:
+                isPortfolioDemo || isVisitorDemo
+                    ? 'portfolio-visitor'
+                    : `demo-${demoUser}`,
+            name:
+                isPortfolioDemo || isVisitorDemo
+                    ? 'Demo Reviewer'
+                    : `Demo ${demoUser}`,
             email: `${demoUser}@example.invalid`,
         },
         getAccessTokenSilently: async () => {

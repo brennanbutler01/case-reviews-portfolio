@@ -1,4 +1,4 @@
-"""Deploy only the static portfolio artifact to the dedicated personal project."""
+"""Deploy only the built frontend artifact to the dedicated personal project."""
 import argparse
 import json
 from pathlib import Path
@@ -15,7 +15,7 @@ project = json.loads(project_path.read_text())
 if project.get("projectName") != "case-reviews-demo" or project.get("orgId") != "team_cwjFWlUVzkCIYgVepQ6Glc71":
     raise SystemExit("Link the dedicated personal case-reviews-demo Vercel project first.")
 if not (root / "dist/index.html").is_file():
-    raise SystemExit("Run corepack yarn build:portfolio first.")
+    raise SystemExit("Run corepack yarn build:visitor or build:portfolio first.")
 # A directory outside Git publishes the verified artifact without Git author metadata.
 with tempfile.TemporaryDirectory(prefix="case-reviews-deploy-") as directory:
     target = Path(directory)

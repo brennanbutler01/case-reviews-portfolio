@@ -19,7 +19,11 @@ const Burger = ({ links }: HeaderProps) => {
     return (
         <Menu onClose={close}>
             <Menu.Target>
-                <MantineBurger opened={opened} onClick={toggle} />
+                <MantineBurger
+                    aria-label='Toggle navigation'
+                    opened={opened}
+                    onClick={toggle}
+                />
             </Menu.Target>
             <Menu.Dropdown>
                 {links.map(link => (

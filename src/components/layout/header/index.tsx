@@ -79,7 +79,7 @@ const Header = ({ links }: HeaderProps) => {
         links.find(link => pathname.includes(link.link))?.link,
     )
     const { classes, cx, theme } = useStyles()
-    const isSm = useMediaQuery(`(max-width: ${theme.breakpoints.sm}`)
+    const isSm = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 
     useEffect(() => setActive(pathname), [pathname])
 

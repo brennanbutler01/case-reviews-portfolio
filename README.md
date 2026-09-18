@@ -8,30 +8,21 @@ Originally developed around requirements from Oregon Department of Human Service
 
 Live: https://case-reviews-demo.vercel.app
 
-`corepack yarn build:portfolio` builds a standalone, no-signup demonstration for Vercel's free personal Hobby plan. The deployment configuration selects this command. It seeds invented staff and case records in memory, scoped to the visitor's current tab. Edits survive navigation within the app and reset on a page refresh or **Reset demo**. Case records are never submitted to a backend or stored remotely.
+The hosted demo connects this React frontend to the original .NET 10 API on Vercel and a dedicated PostgreSQL database on Neon's free plan. Visitors receive separate one-hour sessions without signing up. Records survive page reloads within that session. **Reset demo** deletes the session's server-side records and revokes its token. Use invented information only.
 
-This mode demonstrates the frontend workflows, including PDF export. The actual C# API remains a separate component verified through the Docker setup below. The hosted demo does not demonstrate live database persistence, real authentication, or current benefit-policy correctness.
-
-```sh
-corepack yarn build:portfolio
-corepack yarn test:e2e:portfolio
-```
-
-To test the published site, set `PORTFOLIO_URL` to its HTTPS origin when running the browser test. It checks creation, editing, details, PDF download, deletion, statistics, tab isolation, reset, direct routes, a mobile viewport, and absence of case-data network calls.
-
-The dedicated Vercel project is `case-reviews-demo` under the personal `brennanbutler01s-projects` Hobby account. It is separate from the historical `case-reviews` deployment.
-
-The personal account is on Vercel's free Hobby plan. No database, server, paid add-on, or environment secret is needed. Vercel Authentication is disabled only on the dedicated demo project so visitors can open it without an account.
-
-Automatic GitHub deployment is not connected. Vercel's commit-author check blocked source deployment, so updates publish only the locally built static artifact through the signed-in project owner's account:
+The frontend and API use the personal Vercel Hobby account. Database credentials and the session signing key exist only on the API project. Expired sessions are rejected immediately; physical cleanup runs while the container is awake and at startup after idle periods.
 
 ```sh
 nvm use
-corepack yarn deploy:portfolio
-PORTFOLIO_URL=https://case-reviews-demo.vercel.app corepack yarn test:e2e:portfolio
+corepack yarn deploy:visitor
+VISITOR_URL=https://case-reviews-demo.vercel.app VISITOR_API_URL=https://case-reviews-demo-api.vercel.app corepack yarn test:e2e:visitor
 ```
 
-This requires Python 3 and an authenticated Vercel CLI. The script validates the linked personal project, creates a temporary artifact directory outside Git, and uploads only `dist`. It never includes repository history, historical screenshots, test credentials, or environment files. `python3 scripts/deploy_portfolio.py --check` validates packaging without uploading. Do not use this command for the authenticated application.
+The browser test exercises real database-backed creation, editing, PDF export, reload persistence, visitor isolation, deletion and reset. The API is at https://case-reviews-demo-api.vercel.app. No historical agency database or identity account is used. This demonstration does not establish current benefit-policy correctness.
+
+Automatic GitHub deployment is not connected. The deployment script validates the linked personal project and publishes only the built frontend artifact from a temporary directory outside Git. It excludes repository history and environment files. API deployment instructions are in the companion repository's VERCEL.md.
+
+For a completely offline frontend demonstration, `corepack yarn build:portfolio` and `corepack yarn test:e2e:portfolio` still provide separate in-memory sample data. That mode does not call the API and is not the hosted visitor mode.
 
 ## Run the local demo
 
@@ -69,7 +60,7 @@ Alternatively, set `CHROME_PATH` to an installed Chrome executable for browser t
 
 Copy `.env.example` to `.env.local` and supply your own Auth0 application configuration. Run `corepack yarn dev`. Client environment variables are public build inputs; never put passwords or secrets in a `VITE_` variable. The server README lists its separate configuration.
 
-The Docker demo login is available only in Vite development on loopback. Ordinary production builds require real authentication; the separate portfolio build uses only in-memory synthetic data. Hosted authentication and upgrades of an existing database need separate verification before deployment.
+The Docker demo login is available only in Vite development on loopback. Ordinary production builds require Auth0; the explicit visitor build uses temporary API sessions, and the separate portfolio build uses only in-memory synthetic data. Hosted authentication and upgrades of an existing database need separate verification before deployment.
 
 See [RECOVERY.md](RECOVERY.md) for verification and remaining release work. Historical screenshots and exported review documents have been removed from the publication source; the public demo uses synthetic data.
 
@@ -77,4 +68,4 @@ See [RECOVERY.md](RECOVERY.md) for verification and remaining release work. Hist
 
 The `dev:visitor` command connects this original frontend to the companion API's production-mode visitor service on port 5210. Run the API's `compose.visitor.yaml` setup first. Then run `corepack yarn test:e2e:visitor`. This test creates and edits real database records, downloads a report, verifies isolation with a second browser context, reloads persisted data and resets the visitor session.
 
-For hosted builds set `VITE_VISITOR_DEMO=true`, `VITE_PORTFOLIO_DEMO=false`, and `VITE_BACKEND_API` to the real API URL. Visitor data expires after one hour; Reset demo deletes its server-side records. The current public Vercel site is still the old static demo until backend deployment and live integration checks are complete. See the API's VISITOR-DEMO.md for hosting requirements.
+For hosted builds set `VITE_VISITOR_DEMO=true`, `VITE_PORTFOLIO_DEMO=false`, and `VITE_BACKEND_API` to the real API URL. Visitor data expires after one hour; Reset demo deletes its server-side records. The public Vercel site uses this visitor mode. See the API's VISITOR-DEMO.md for hosting requirements.

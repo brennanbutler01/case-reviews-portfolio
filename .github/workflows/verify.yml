@@ -29,7 +29,7 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           repository: brennanbutler01/case-reviews-api
-          ref: 76f729f2c5718831e209f91aa9da41f04a492d58
+          ref: beb420fdd488dcc43daa1b84fdd0e46101030543
           path: companion-api
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:

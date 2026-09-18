@@ -18,7 +18,9 @@
         "test:e2e:portfolio": "playwright test --config playwright.portfolio.config.ts",
         "deploy:portfolio": "corepack yarn build:portfolio && python3 scripts/deploy_portfolio.py",
         "dev:visitor": "VITE_VISITOR_DEMO=true VITE_BACKEND_API=http://127.0.0.1:5210 VITE_ROOT=http://127.0.0.1:5211 vite --host 127.0.0.1 --port 5211 --strictPort",
-        "test:e2e:visitor": "playwright test --config playwright.visitor.config.ts"
+        "test:e2e:visitor": "playwright test --config playwright.visitor.config.ts",
+        "build:visitor": "VITE_VISITOR_DEMO=true VITE_PORTFOLIO_DEMO=false VITE_BACKEND_API=https://case-reviews-demo-api.vercel.app VITE_ROOT=https://case-reviews-demo.vercel.app yarn build",
+        "deploy:visitor": "yarn build:visitor && python3 scripts/deploy_portfolio.py"
     },
     "dependencies": {
         "@auth0/auth0-react": "2.24.1",

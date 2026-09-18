@@ -17,7 +17,8 @@ const StaffTable = () => {
         () => [
             {
                 header: 'Name',
-                accessorFn: row => `${row.firstName} ${row.lastName}`,
+                accessorFn: row =>
+                    [row.firstName, row.lastName].filter(Boolean).join(' '),
                 size: 140,
             },
             {
