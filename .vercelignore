@@ -1,0 +1,13 @@
+/assets/
+tests/
+tests-examples/
+e2e-local/
+e2e-portfolio/
+playwright/
+test-results/
+playwright-report/
+.env*
+.context/
+
+!src/assets/
+!src/assets/**
