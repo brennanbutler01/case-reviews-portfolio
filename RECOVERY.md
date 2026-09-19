@@ -33,7 +33,7 @@ Use the README for startup and checks. This is a working local portfolio candida
 
 ## Portfolio hosting preparation
 
-Added an explicit `build:portfolio` mode with independent in-memory sample data per tab, no Auth0 login and no backend calls. It resets on refresh, and the interface explains that behavior. Vercel configuration targets this static build and excludes archived tests and historical assets from upload. The dedicated personal Hobby project is deployed at https://case-reviews-demo.vercel.app. It serves only static assets and has no configured environment secrets.
+Added an explicit `build:portfolio` mode with independent in-memory sample data per tab, no Auth0 login and no backend calls. It resets on refresh, and the interface explains that behavior. Vercel configuration targets this static build and excludes archived tests and historical assets from upload. At that stage, the dedicated personal Hobby project at https://case-reviews-demo.vercel.app served only static assets and had no configured environment secrets. The September 18 hosted integration below supersedes that deployment while retaining the static build as an offline option.
 
 The old hosted-test password has also been removed from the current source; those tests now require explicitly supplied environment variables. The September 17 cleanup rewrote affected branch histories; GitHub retained old commits still require Support follow-up. View details now includes general comments and creates fresh form state when opened, avoiding stale values after editing.
 
